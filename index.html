@@ -1,0 +1,736 @@
+
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permanent Product Calculator</title>
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(145deg, #1a2f4b 0%, #2b4f7b 100%);
+            min-height: 100vh;
+            padding: 20px;
+            animation: bgMove 16s infinite alternate;
+        }
+
+        @keyframes bgMove {
+            0% { background: linear-gradient(125deg, #1a2f4b, #2b4f7b); }
+            100% { background: linear-gradient(145deg, #163a5e, #34658b); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(6px);
+            border-radius: 40px;
+            padding: 30px 32px;
+            box-shadow: 0 30px 50px rgba(0, 20, 40, 0.5);
+            animation: appear 0.6s cubic-bezier(0.12, 0.87, 0.23, 1.1);
+        }
+
+        @keyframes appear {
+            0% { opacity: 0; transform: scale(0.95) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        h1 {
+            color: #102a41;
+            font-size: 2.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        h1 i {
+            color: #f4b942;
+            filter: drop-shadow(0 6px 8px #b6630040);
+        }
+
+        .subtitle {
+            text-align: center;
+            background: #deeaf8;
+            width: fit-content;
+            margin: 0 auto 30px auto;
+            padding: 12px 36px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: #1b4b6c;
+            border: 2px solid white;
+            box-shadow: 0 6px 14px #0000001a;
+        }
+
+        /* product list */
+        .product-list {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .product-item {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 24px 28px;
+            border-left: 8px solid #2f7eb6;
+            box-shadow: 0 14px 30px rgba(0, 30, 60, 0.15);
+            animation: cardRise 0.5s ease-out;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .product-item:hover {
+            transform: translateY(-4px) scale(1.005);
+            box-shadow: 0 25px 40px -8px #1f4a7a;
+        }
+
+        @keyframes cardRise {
+            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #d45a4a;
+            color: white;
+            border: none;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+            border: 2px solid white;
+            box-shadow: 0 6px 10px rgba(180, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .delete-btn:hover {
+            background: #b13b2c;
+            transform: rotate(10deg) scale(1.1);
+            opacity: 1;
+        }
+
+        .product-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-right: 50px;
+        }
+
+        .product-info {
+            flex: 2;
+            min-width: 260px;
+        }
+
+        .product-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #16344d;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-name i {
+            color: #2f7eb6;
+        }
+
+        .price-info {
+            display: flex;
+            gap: 28px;
+            background: #ecf3fa;
+            padding: 12px 25px;
+            border-radius: 50px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .purchase-price {
+            color: #bc4e4e;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .market-price {
+            color: #1e8040;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .per-item {
+            font-weight: 600;
+            background: white;
+            padding: 2px 22px;
+            border-radius: 40px;
+        }
+        .profit { color: #1e8040; }
+        .loss { color: #bc4e4e; }
+
+        .amount-control {
+            flex: 2;
+            min-width: 330px;
+            background: #ecf3fa;
+            border-radius: 60px;
+            padding: 8px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid white;
+        }
+        .amount-label {
+            font-weight: 600;
+            color: #1d6190;
+            font-size: 1.2rem;
+        }
+        .amount-input {
+            flex: 1;
+            height: 54px;
+            border: none;
+            background: white;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            border: 2px solid #b6d4fa;
+        }
+        .amount-input:focus {
+            outline: none;
+            border-color: #2f7eb6;
+        }
+        .calculate-btn {
+            background: #2f7eb6;
+            color: white;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .calculate-btn:hover {
+            background: #1e5a86;
+            transform: scale(1.05);
+        }
+
+        .product-details {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .detail-box {
+            background: #f2f8ff;
+            border-radius: 28px;
+            padding: 16px 8px;
+            text-align: center;
+            border: 1px solid white;
+            transition: 0.2s;
+        }
+        .detail-box:hover {
+            transform: translateY(-5px);
+            background: #e6f0fe;
+        }
+        .detail-label {
+            font-size: 0.9rem;
+            color: #3a5770;
+            font-weight: 600;
+        }
+        .detail-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #102b3f;
+        }
+        .quantity-value {
+            color: #1f70a5;
+            font-size: 2.4rem;
+        }
+        .profit-box { border-left: 8px solid #249c57; }
+        .loss-box { border-left: 8px solid #cc4f4f; }
+
+        /* summary sections */
+        .profit-loss-summary {
+            background: #e1effb;
+            border-radius: 50px;
+            padding: 28px 25px;
+            margin: 40px 0 25px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            border: 2px solid white;
+        }
+
+        .pl-item {
+            text-align: center;
+            border-right: 2px solid #b1cef0;
+        }
+        .pl-item:last-child { border-right: none; }
+        .pl-label { font-weight: 600; color: #1a4f79; font-size: 1rem; }
+        .pl-value { font-size: 2rem; font-weight: 800; }
+
+        .summary {
+            background: linear-gradient(115deg, #1a4972, #2e6190);
+            border-radius: 50px;
+            padding: 28px 25px;
+            color: white;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0 30px;
+            box-shadow: 0 22px 35px -8px #0b304e;
+        }
+        .summary-item {
+            text-align: center;
+            border-right: 2px solid #8fbbe6;
+        }
+        .summary-item:last-child { border-right: none; }
+        .summary-label { opacity: 0.9; font-size: 1rem; }
+        .summary-value { font-size: 2.2rem; font-weight: 700; }
+
+        /* ADD product section */
+        .add-product-section {
+            background: #ecf5fd;
+            border-radius: 40px;
+            padding: 30px 30px;
+            margin: 30px 0 20px;
+            border: 3px dashed #2f7eb6;
+            animation: gentlePulse 3s infinite;
+        }
+        @keyframes gentlePulse {
+            0% { border-color: #2f7eb6; }
+            50% { border-color: #f4b942; }
+            100% { border-color: #2f7eb6; }
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #10334d;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .input-group label {
+            font-weight: 600;
+            color: #1a4e72;
+            font-size: 1rem;
+        }
+        .input-group input {
+            padding: 16px 18px;
+            border: 2px solid #c2dbf5;
+            border-radius: 40px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #2f7eb6;
+            transform: scale(1.02);
+            outline: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .add-btn {
+            background: #1e8040;
+            color: white;
+            border: none;
+            padding: 18px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.25s;
+            box-shadow: 0 12px 22px #0f562a60;
+            flex: 1;
+            justify-content: center;
+        }
+        .add-btn:hover {
+            background: #146b34;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 28px #0f562a90;
+        }
+
+        .clear-btn {
+            background: #a0b9ce;
+            color: #1d3e5c;
+            border: none;
+            padding: 18px 22px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .clear-btn:hover {
+            background: #8faec9;
+            transform: scale(1.02);
+        }
+
+        .reset-btn {
+            background: #c95b4a;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+            transition: 0.2s;
+        }
+        .reset-btn:hover {
+            background: #ae4132;
+            transform: rotate(1deg) scale(1.02);
+        }
+
+        .info-text {
+            background: #dbeafe;
+            border-radius: 60px;
+            padding: 16px 28px;
+            margin-top: 25px;
+            text-align: center;
+            font-weight: 500;
+            color: #103856;
+            border: 2px dotted white;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            background: #f4f9ff;
+            border-radius: 40px;
+            color: #4b637a;
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 800px) {
+            .input-grid { grid-template-columns: 1fr; }
+            .product-details { grid-template-columns: 1fr 1fr; }
+            .profit-loss-summary { grid-template-columns: 1fr 1fr; }
+            .summary { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        <i class="fas fa-save"></i> Permanent Products
+        <i class="fas fa-database"></i>
+    </h1>
+    <div class="subtitle">
+        <i class="fas fa-cloud-save" style="color:#137e3b;"></i> Market price ke hisaab se profit ya loss dekhein
+    </div>
+
+    <div class="product-list" id="productList"></div>
+
+    <!-- PL summary -->
+    <div class="profit-loss-summary" id="plSummary"></div>
+    <!-- main summary -->
+    <div class="summary" id="mainSummary"></div>
+
+    <!-- ADD product section -->
+    <div class="add-product-section">
+        <div class="section-title">
+            <i class="fas fa-plus-circle" style="color:#1e8040;"></i>
+            Add New Product (permanent)
+        </div>
+        <div class="input-grid">
+            <div class="input-group">
+                <label><i class="fas fa-tag"></i> Product Name</label>
+                <input type="text" id="productName" placeholder="e.g. Laptop" value="Laptop">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-coins"></i> Purchase Price ()</label>
+                <input type="number" id="purchasePrice" value="500" min="0" step="10">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-store"></i> Market Price ()</label>
+                <input type="number" id="marketPrice" value="650" min="0" step="10">
+            </div>
+            <div class="button-group">
+                <button class="add-btn" onclick="addProduct()">
+                    <i class="fas fa-plus-circle"></i> ADD PRODUCT
+                </button>
+                <button class="clear-btn" onclick="clearInputs()">
+                    <i class="fas fa-eraser"></i> clear
+                </button>
+            </div>
+        </div>
+        <small style="display: block; text-align: center; margin-top: 20px; color: #305d86;">
+
+        </small>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end;">
+        <button class="reset-btn" onclick="resetAllAmounts()">
+            <i class="fas fa-undo-alt"></i> reset amounts only
+        </button>
+    </div>
+
+    <div class="info-text" id="infoMessage">
+        <i class="fas fa-shield-alt" style="color:#1d7ab3;"></i>
+        <strong>✅ Permanent Save:</strong>  Tip:  Add button = new product |  Delete button = remove product | Enter amount and see instant results
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- localStorage se data load karo ----------
+        function loadProducts() {
+            const saved = localStorage.getItem('permanentProducts');
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {
+                    console.error('Error loading products', e);
+                }
+            }
+            // default products
+            return [
+                { id: 1, name: 'Purse', purchasePrice: 450, marketPrice: 600, amount: 0 },
+                { id: 2, name: 'Shoes', purchasePrice: 800, marketPrice: 1000, amount: 0 }
+            ];
+        }
+
+        // ---------- localStorage me save karo ----------
+        function saveProducts() {
+            localStorage.setItem('permanentProducts', JSON.stringify(products));
+        }
+
+        // ---------- global variables ----------
+        let products = loadProducts();
+        let nextId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+
+        // helper: update quantity based on amount
+        function refreshQuantities() {
+            products.forEach(p => {
+                p.quantity = (p.purchasePrice > 0) ? Math.floor(p.amount / p.purchasePrice) : 0;
+            });
+        }
+
+        // ---------- RENDER ----------
+        function renderFull() {
+            refreshQuantities();
+            const container = document.getElementById('productList');
+            container.innerHTML = '';
+
+            if (products.length === 0) {
+                container.innerHTML = '<div class="empty-message"><i class="fas fa-box-open fa-3x"></i><br>no products yet · click ADD PRODUCT</div>';
+            } else {
+                products.forEach(prod => {
+                    const q = prod.quantity;
+                    const invested = q * prod.purchasePrice;
+                    const marketTotal = q * prod.marketPrice;
+                    const pl = marketTotal - invested;
+                    const perItem = prod.marketPrice - prod.purchasePrice;
+
+                    const card = document.createElement('div');
+                    card.className = 'product-item';
+                    card.id = `prod-${prod.id}`;
+                    card.innerHTML = `
+                        <button class="delete-btn" onclick="deleteProduct(${prod.id})" title="delete permanently"><i class="fas fa-trash"></i></button>
+                        <div class="product-header">
+                            <div class="product-info">
+                                <div class="product-name"><i class="fas fa-cube"></i> ${prod.name}</div>
+                                <div class="price-info">
+                                    <span class="purchase-price"><i class="fas fa-tag"></i> ${prod.purchasePrice}</span>
+                                    <span class="market-price"><i class="fas fa-chart-line"></i> ${prod.marketPrice}</span>
+                                    <span class="per-item ${perItem >= 0 ? 'profit' : 'loss'}">per item: ${perItem >= 0 ? '+' : ''}${perItem}</span>
+                                </div>
+                            </div>
+                            <div class="amount-control">
+                                <span class="amount-label"><i class="fas fa-rupee-sign"></i> amount</span>
+                                <input type="number" class="amount-input" id="inp-${prod.id}" value="${prod.amount}" min="0" step="50" onchange="updateAmount(${prod.id}, this.value)">
+                                <button class="calculate-btn" onclick="triggerCalc(${prod.id})"><i class="fas fa-sync-alt"></i> calc</button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <div class="detail-box"><div class="detail-label">invested</div><div class="detail-value">${invested}</div></div>
+                            <div class="detail-box"><div class="detail-label">quantity</div><div class="detail-value quantity-value">${q} pcs</div></div>
+                            <div class="detail-box"><div class="detail-label">market value</div><div class="detail-value">${marketTotal}</div></div>
+                            <div class="detail-box ${pl >= 0 ? 'profit-box' : 'loss-box'}">
+                                <div class="detail-label">P&L</div><div class="detail-value ${pl >= 0 ? 'profit' : 'loss'}">${pl >= 0 ? '+' : ''}${pl}</div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+            updateSummaries();
+            saveProducts(); // har render ke baad save karo
+        }
+
+        // update summaries (totals)
+        function updateSummaries() {
+            refreshQuantities();
+            let totalInvest = 0, totalMarket = 0, totalQty = 0, totalProfitVal = 0, totalLossVal = 0;
+            products.forEach(p => {
+                const q = p.quantity;
+                const inv = q * p.purchasePrice;
+                const mkt = q * p.marketPrice;
+                totalInvest += inv;
+                totalMarket += mkt;
+                totalQty += q;
+                const pl = mkt - inv;
+                if (pl > 0) totalProfitVal += pl;
+                else totalLossVal += Math.abs(pl);
+            });
+            const netPl = totalMarket - totalInvest;
+            const plPercent = totalInvest > 0 ? ((netPl / totalInvest) * 100).toFixed(1) : 0;
+
+            document.getElementById('mainSummary').innerHTML = `
+                <div class="summary-item"><div class="summary-label">total invest</div><div class="summary-value">${totalInvest}</div></div>
+                <div class="summary-item"><div class="summary-label">market value</div><div class="summary-value">${totalMarket}</div></div>
+                <div class="summary-item"><div class="summary-label">net P&L</div><div class="summary-value ${netPl >= 0 ? 'profit' : 'loss'}">${netPl >= 0 ? '+' : ''}${netPl}</div></div>
+                <div class="summary-item"><div class="summary-label">total qty</div><div class="summary-value">${totalQty} pcs</div></div>
+            `;
+
+            document.getElementById('plSummary').innerHTML = `
+                <div class="pl-item"><div class="pl-label">total profit</div><div class="pl-value profit">+${totalProfitVal}</div></div>
+                <div class="pl-item"><div class="pl-label">total loss</div><div class="pl-value loss">-${totalLossVal}</div></div>
+                <div class="pl-item"><div class="pl-label">net P&L</div><div class="pl-value ${netPl >= 0 ? 'profit' : 'loss'}">${netPl >= 0 ? '+' : ''}${Math.abs(netPl)}</div></div>
+                <div class="pl-item"><div class="pl-label">P&L %</div><div class="pl-value ${netPl >= 0 ? 'profit' : 'loss'}">${netPl >= 0 ? '+' : ''}${plPercent}%</div></div>
+            `;
+        }
+
+        // ----- manual update functions -----
+        window.updateAmount = function(pid, val) {
+            const prod = products.find(p => p.id === pid);
+            if (!prod) return;
+            prod.amount = parseFloat(val) || 0;
+            renderFull();
+        };
+
+        window.triggerCalc = function(pid) {
+            const inp = document.getElementById(`inp-${pid}`);
+            if (inp) window.updateAmount(pid, inp.value);
+        };
+
+        // ---------- DELETE only when user clicks ----------
+        window.deleteProduct = function(pid) {
+            if (confirm('Permanently delete this product? This cannot be undone.')) {
+                products = products.filter(p => p.id !== pid);
+                renderFull();
+                showTemporaryMessage('🗑️ product deleted · it will not come back');
+            }
+        };
+
+        // ---------- ADD product ----------
+        window.addProduct = function() {
+            const nameIn = document.getElementById('productName');
+            const purchIn = document.getElementById('purchasePrice');
+            const marketIn = document.getElementById('marketPrice');
+
+            const name = nameIn.value.trim() || 'item';
+            const purch = parseFloat(purchIn.value) || 0;
+            const market = parseFloat(marketIn.value) || 0;
+            if (purch < 0 || market < 0) {
+                alert('prices cannot be negative');
+                return;
+            }
+
+            const newProd = {
+                id: nextId++,
+                name: name,
+                purchasePrice: purch,
+                marketPrice: market,
+                amount: 0
+            };
+            products.push(newProd);
+            renderFull();
+            showTemporaryMessage(`✅ "${name}" added · permanently saved!`);
+        };
+
+        window.clearInputs = function() {
+            document.getElementById('productName').value = '';
+            document.getElementById('purchasePrice').value = '500';
+            document.getElementById('marketPrice').value = '650';
+            showTemporaryMessage('✏️ inputs cleared');
+        };
+
+        // reset only amounts, never remove products
+        window.resetAllAmounts = function() {
+            if (products.length === 0) {
+                showTemporaryMessage('no products to reset');
+                return;
+            }
+            products.forEach(p => p.amount = 0);
+            renderFull();
+            showTemporaryMessage('🔄 all amounts reset to zero · products saved');
+        };
+
+        // helper message
+        function showTemporaryMessage(msg) {
+            const infoDiv = document.getElementById('infoMessage');
+            const original = infoDiv.innerHTML;
+            infoDiv.innerHTML = `<i class="fas fa-check-circle" style="color:#2a7f3a;"></i> <strong>${msg}</strong>`;
+            setTimeout(() => {
+                infoDiv.innerHTML = original;
+            }, 2200);
+        }
+
+        // initial render
+        renderFull();
+
+        // optional: window close se pehle bhi save ho jayega, but render already saves
+        window.addEventListener('beforeunload', function() {
+            saveProducts();
+        });
+    })();
+</script>
+<!-- font awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>
