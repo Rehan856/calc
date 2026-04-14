@@ -1,0 +1,1761 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cosmic Discoveries | Astronomy Exploration</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="sstyle.css">
+        <style>
+            
+            :root {
+                --primary: #0b0b2d;
+                --secondary: #1a1a4a;
+                --accent: #4a3eff;
+                --accent-light: #756cff;
+                --text: #ffffff;
+                --text-secondary: #b8b8ff;
+            }
+            
+            body {
+                font-family: 'Space Grotesk', sans-serif;
+                background: linear-gradient(135deg, var(--primary) 0%, #000000 100%);
+                color: var(--text);
+                line-height: 1.6;
+                overflow-x: hidden;
+                background-attachment: fixed;
+            }
+            
+            /* Navigation */
+            .navbar {
+                background: rgba(11, 11, 45, 0.9);
+                backdrop-filter: blur(10px);
+                padding: 15px 0;
+                transition: all 0.3s ease;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .navbar-brand {
+                font-weight: 700;
+                color: var(--text);
+                font-size: 1.8rem;
+            }
+            
+            .nav-link {
+                color: var(--text);
+                font-weight: 500;
+                margin: 0 10px;
+                position: relative;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-link:before {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: 0;
+                left: 0;
+                background-color: var(--accent);
+                transition: width 0.3s ease;
+            }
+            
+            .nav-link:hover {
+                color: var(--accent-light);
+            }
+            
+            .nav-link:hover:before {
+                width: 100%;
+            }
+            
+            /* Hero Section */
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 800"><rect fill="%230B0B2D" width="800" height="800"/><g fill="%231A1A4A"><circle cx="400" cy="400" r="600"/><circle cx="400" cy="400" r="500"/><circle cx="400" cy="400" r="400"/></g></svg>') no-repeat center center;
+                background-size: cover;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .hero:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at center, transparent 0%, var(--primary) 70%);
+                top: 0;
+                left: 0;
+            }
+            
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                text-align: center;
+                padding: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 4rem;
+                font-weight: 700;
+                margin-bottom: 1.5rem;
+                background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+                color: var(--text-secondary);
+            }
+            
+            /* Section Styling */
+            .section {
+                padding: 100px 0;
+                position: relative;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 3rem;
+                text-align: center;
+                position: relative;
+            }
+            
+            .section-title:after {
+                content: '';
+                position: absolute;
+                width: 100px;
+                height: 4px;
+                background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 2px;
+            }
+            
+            /* Cards */
+            .cosmic-card {
+                background: rgba(26, 26, 74, 0.6);
+                border-radius: 15px;
+                overflow: hidden;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                margin-bottom: 30px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+            }
+            
+            .cosmic-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+            
+            .cosmic-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
+            
+            .cosmic-card .card-body {
+                padding: 25px;
+            }
+            
+            /* Ticker */
+            .ticker {
+                background: var(--secondary);
+                padding: 15px 0;
+                overflow: hidden;
+                position: relative;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .ticker-content {
+                display: flex;
+                animation: tickerAnimation 30s linear infinite;
+                white-space: nowrap;
+            }
+            
+            .ticker-item {
+                padding: 0 30px;
+                display: flex;
+                align-items: center;
+            }
+            
+            @keyframes tickerAnimation {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-100%); }
+            }
+            
+            /* Buttons */
+            .btn-cosmic {
+                background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+                color: white;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 50px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            
+            .btn-cosmic:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                color: white;
+            }
+            
+            /* Footer */
+            .footer {
+                background: var(--primary);
+                padding: 60px 0 30px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .footer-title {
+                font-size: 1.5rem;
+                margin-bottom: 25px;
+                font-weight: 600;
+            }
+            
+            .footer-links {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-links li {
+                margin-bottom: 15px;
+            }
+            
+            .footer-links a {
+                color: var(--text-secondary);
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+            
+            .footer-links a:hover {
+                color: var(--accent-light);
+            }
+            
+            /* Animations */
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+                100% { transform: translateY(0px); }
+            }
+            
+            .floating {
+                animation: float 5s ease-in-out infinite;
+            }
+            
+            /* Responsive */
+            @media (max-width: 992px) {
+                .hero-title {
+                    font-size: 3rem;
+                }
+                
+                .section-title {
+                    font-size: 2rem;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: 2.5rem;
+                }
+                
+                .hero-subtitle {
+                    font-size: 1.2rem;
+                }
+                
+                .section {
+                    padding: 60px 0;
+                }
+            }
+            
+            /* Stars Background */
+            .stars {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                pointer-events: none;
+            }
+            
+            .star {
+                position: absolute;
+                background: white;
+                border-radius: 50%;
+            }
+            
+            /* Visitor Counter */
+            .visitor-counter {
+                background: var(--secondary);
+                padding: 10px 20px;
+                border-radius: 50px;
+                display: inline-flex;
+                align-items: center;
+                margin: 10px 0;
+            }
+            
+            Scroll to Top
+            .scroll-to-top {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: var(--accent);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1000;
+            }
+            
+            .scroll-to-top.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Floating animation for cards and hero elements */
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-15px) rotate(-2deg); }
+                100% { transform: translateY(0px); }
+            }
+
+            .floating {
+                animation: float 6s ease-in-out infinite;
+            }
+
+            /* Floating animation for hero text and buttons */
+            @keyframes floatUp {
+                0% { transform: translateY(20px); opacity: 0; }
+                50% { transform: translateY(-10px); opacity: 0.7; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+
+            .hero-title {
+                animation: floatUp 2s ease-out forwards;
+            }
+
+            .hero-subtitle {
+                animation: floatUp 2.5s ease-out forwards;
+                animation-delay: 0.5s;
+            }
+
+            .visitor-counter {
+                animation: floatUp 3s ease-out forwards;
+                animation-delay: 1s;
+            }
+
+            .hero .btn-cosmic, 
+            .hero .btn-outline-light {
+                animation: floatUp 3.5s ease-out forwards;
+                animation-delay: 1.5s;
+            }
+
+            /* Adjust stars container inside hero */
+            .stars {
+                position: absolute; /* changed from fixed to absolute */
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 1; /* above background but below hero content */
+                pointer-events: none;
+            }
+
+            /* Shooting star animation */
+            .shooting-star {
+                position: absolute;
+                width: 2px;
+                height: 100px;
+                background: linear-gradient(white, transparent);
+                top: 0;
+                left: 0;
+                opacity: 0;
+                transform: rotate(45deg);
+                pointer-events: none;
+                z-index: 0; /* below hero content */
+                animation: shoot 2s linear infinite;
+            }
+
+            /* Button style updates */
+            .btn {
+                background: #1f2933;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 10px;
+                transition: all 0.3s ease; /* smooth hover effect */
+            }
+
+            .btn:hover {
+                background: #6ea8a6;
+                transform: scale(1.05); /* smooth zoom effect */
+            }
+
+            /* Smooth scrolling for the whole page */
+            html {
+                scroll-behavior: smooth;
+            }
+            /* Floating animation for cards and hero elements */
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-15px) rotate(-2deg); }
+                100% { transform: translateY(0px); }
+            }
+
+            .floating {
+                animation: float 6s ease-in-out infinite;
+            }
+
+            /* Floating animation for hero text and buttons */
+            @keyframes floatUp {
+                0% { transform: translateY(20px); opacity: 0; }
+                50% { transform: translateY(-10px); opacity: 0.7; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+
+            .hero-title {
+                animation: floatUp 2s ease-out forwards;
+            }
+
+            .hero-subtitle {
+                animation: floatUp 2.5s ease-out forwards;
+                animation-delay: 0.5s;
+            }
+
+            .visitor-counter {
+                animation: floatUp 3s ease-out forwards;
+                animation-delay: 1s;
+            }
+
+            .hero .btn-cosmic, 
+            .hero .btn-outline-light {
+                animation: floatUp 3.5s ease-out forwards;
+                animation-delay: 1.5s;
+            }
+
+            /* Button style updates */
+            .btn {
+                background: #1f2933;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+            }
+
+            .btn:hover {
+                background: #6ea8a6;
+                transform: scale(1.05);
+            }
+
+            /* Smooth scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-15px) rotate(-2deg); }
+                100% { transform: translateY(0px); }
+            }
+
+            .cosmic-card img {
+                animation: float 6s ease-in-out infinite;
+                transform-origin: center bottom;
+            }
+            /* Floating keyframes */
+            @keyframes float {
+                0% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-15px) rotate(-2deg); }
+                100% { transform: translateY(0px) rotate(0deg); }
+            }
+
+            /* Apply floating animation to images inside cosmic cards */
+            .cosmic-card img {
+                animation-name: float;
+                animation-duration: 6s;
+                animation-timing-function: ease-in-out;
+                animation-iteration-count: infinite;
+                animation-fill-mode: forwards;
+                transform-origin: center bottom;
+                transition: transform 0.3s ease;
+                will-change: transform;
+                /* Add a subtle shadow for depth */
+                box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+                border-radius: 12px;
+            }
+
+            /* On hover, images gently scale up and pause floating */
+            .cosmic-card:hover img {
+                animation-play-state: paused;
+                transform: scale(1.05) translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            }
+
+            /* Add slight random animation delays for natural effect */
+            .cosmic-card:nth-child(4n+1) img {
+                animation-delay: 0s;
+            }
+            .cosmic-card:nth-child(4n+2) img {
+                animation-delay: 1.5s;
+            }
+            .cosmic-card:nth-child(4n+3) img {
+                animation-delay: 3s;
+            }
+            .cosmic-card:nth-child(4n+4) img {
+                animation-delay: 4.5s;
+            }
+
+            /* Optional: smooth floating for hero images or other elements */
+            .hero img {
+                animation: float 6s ease-in-out infinite;
+                transform-origin: center bottom;
+            }
+
+            /* Applied custom style to images (cosmic-card img) as requested */
+            .cosmic-card img {
+                position: relative; /* Changed from absolute to relative for better fit in cards */
+                top: 0; /* Adjusted from 100px to fit within card */
+                right: 0; /* Adjusted from 200px */
+                background-color: rgb(9, 14, 14); /* Dark background overlay effect */
+                color: rgb(28, 168, 138); /* Text color if needed */
+                border: 2px solid rgb(71, 249, 255); /* Cyan border */
+                height: 200px; /* Keep original height */
+                width: 100%; /* Keep original width */
+                transition: all 2s steps(5); /* Transition with steps timing */
+                transition-delay: 0s;
+                display: block; /* Ensure image behaves as block for styling */
+                object-fit: cover; /* Maintain image fit */
+            }
+
+            .cosmic-card img:hover {
+                background-color: rgb(196, 255, 223); /* Light background on hover */
+                border-radius: 100px; /* Make circular on hover (adjusted for image aspect) */
+                color: rgb(35, 138, 138); /* Hover color */
+                font-size: large; /* If text is overlaid, increase size */
+                transform: rotate(360deg) scaleY(1.5); /* Fixed: transform rotate and scaleY (reduced from 10 to 1.5 for usability) */
+                transition: all 2s steps(5); /* Smooth transition on hover */
+                position: relative; /* Keep relative */
+                top: 0;
+                right: 0;
+                z-index: 10; /* Bring to front on hover */
+            }
+
+            /* Ensure images remain visible and styled properly */
+            .cosmic-card img::before {
+                content: ''; /* Optional overlay for better visibility */
+                position: absolute;
+            }
+            </style>
+    </head>
+    <body>                                                
+        <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-rocket me-2"></i>Cosmic Discoveries</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+<div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#planets">Planets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stars">Stars</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galaxies">Galaxies</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#news">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#feedback">Feedback</a></li>
+
+       
+        </ul>
+        </div>
+    </div>
+    </nav>
+
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="stars"></div>
+            <div class="container hero-content">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="hero-title">Explore the Universe</h1>
+                        <p class="hero-subtitle">Discover the wonders of our cosmos through stunning imagery, scientific discoveries, and astronomical phenomena</p>
+                        <div class="visitor-counter">
+                            <i class="fas fa-users me-2"></i>
+                            <span>Visitors: <span id="visitorCount">12,589</span></span>
+                        </div>
+                        <div class="mt-4">
+                            <a href="#planets" class="btn btn-cosmic me-3">Start Exploring</a>
+                            <a href="#news" class="btn btn-outline-light">Latest News</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ticker -->
+        <div class="ticker">
+            <div class="ticker-content">
+                <div class="ticker-item"><i class="fas fa-satellite me-2"></i> James Webb Telescope reveals new details of Neptune's rings</div>
+                <div class="ticker-item"><i class="fas fa-meteor me-2"></i> Perseid meteor shower peaks August 12-13</div>
+                <div class="ticker-item"><i class="fas fa-rocket me-2"></i> NASA's Artemis I mission sets stage for lunar exploration</div>
+                <div class="ticker-item"><i class="fas fa-globe-americas me-2"></i> Scientists discover potentially habitable exoplanet 100 light-years away</div>
+                <div class="ticker-item"><i class="fas fa-star me-2"></i> Supernova observed in Pinwheel Galaxy 21 million light-years distant</div>
+            </div>
+        </div>
+
+        <!-- Planets Section -->
+        <section id="planets" class="section">
+            <div class="container">
+                <h2 class="section-title">Solar System Planets</h2>
+                <div class="row" id="planets-container">
+                    <!-- Planets will be loaded from JSON -->
+                </div>
+            </div>
+        </section>
+
+        
+    <!-- Stars Section -->
+    <section id="stars" class="section">
+    <div class="container">
+        <h2 class="section-title">Celestial Stars</h2>
+        <div class="row" id="stars-container">
+        </div>
+    </div>
+    </section>
+
+
+        <!-- Galaxies Section -->
+        <section id="galaxies" class="section">
+            <div class="container">
+                <h2 class="section-title">Galaxies & Nebulae</h2>
+                <div class="row" id="galaxies-container">
+                    <!-- Galaxies will be loaded from JSON -->
+                </div>
+            </div>
+        </section>
+
+
+
+    <!-- Telescopes Section -->
+    <section id="telescopes" class="section bg-stars">
+    <div class="container">
+        <h2 class="section-title">Space Telescopes</h2>
+        <div class="row" id="telescopes-container">
+        <!-- Telescope cards will be dynamically loaded here via JS -->
+        </div>
+    </div>
+    </section>
+
+
+
+
+        <!-- Missions Section -->
+    <section id="missions" class="section bg-stars">
+    <div class="container">
+        <h2 class="section-title">Space Missions</h2>
+        <div class="row" id="missions-container">
+        <!-- Missions will be loaded from JSON -->
+        </div>
+    </div>
+    </section>
+
+        <!-- News Section -->
+    <section id="news" class="section">
+    <div class="container">
+        <h2 class="section-title">Space News</h2>
+        <div class="row" id="news-container">
+        <!-- News will be loaded from JSON -->
+        </div>
+    </div>
+    </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="section">
+            <div class="container">
+                <h2 class="section-title">Learning Resources</h2>
+                <div class="row" id="resources-container">
+                    <!-- Resources will be loaded from JSON -->
+                </div>
+            </div>
+        </section>
+
+    <!-- About Us Section -->
+<section id="about" class="section">
+  <div class="container">
+    <h2 class="section-title">About Us</h2>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto text-center">
+        <p>
+          Welcome to <strong>Cosmic Discoveries</strong> — a platform created for curious minds who look up at the night sky and wonder what lies beyond. 
+          Our site is dedicated to exploring the wonders of space: from planets and stars to galaxies, telescopes, and groundbreaking space missions.  
+          We believe that learning about the cosmos should be exciting, inspiring, and accessible to everyone.
+        </p>
+      </div>
+    </div>
+
+    <!-- Our Mission & Vision -->
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <div class="cosmic-card p-4 h-100">
+          <h3>🌌 Our Mission</h3>
+          <p>
+            To spark curiosity and passion for astronomy by bringing together knowledge, images, and discoveries in one interactive space.  
+            We aim to provide learners, space enthusiasts, and future explorers with reliable and inspiring resources.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="cosmic-card p-4 h-100">
+          <h3>🚀 Our Vision</h3>
+          <p>
+            To build a community of dreamers and explorers who share one thing in common:  
+            a desire to reach for the stars, expand human knowledge, and inspire future generations of astronomers and astronauts.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Our Values -->
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <div class="cosmic-card p-4 h-100">
+          <h4>🔭 Exploration</h4>
+          <p>We encourage curiosity and discovery, motivating people to look beyond the Earth and explore the universe.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="cosmic-card p-4 h-100">
+          <h4>📚 Education</h4>
+          <p>We make astronomy fun and educational with easy-to-understand content, facts, and resources for learners of all ages.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="cosmic-card p-4 h-100">
+          <h4>🌍 Community</h4>
+          <p>We believe space is for everyone — our community connects enthusiasts worldwide under one cosmic roof.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Our Team -->
+    <div class="row">
+      <div class="col-lg-12 text-center mb-4">
+        <h3>👨‍🚀 Meet the Team</h3>
+        <p>Behind Cosmic Discoveries is a small but passionate team of astronomy lovers and science communicators.</p>
+      </div>
+      <div class="col-md-4">
+        <div class="cosmic-card p-4 text-center">
+          <img src="https://media.istockphoto.com/id/1363615273/photo/portrait-lifestyle-studio-shot-white-background-of-young-smart-active-asian-male-wear-sweater.webp?a=1&b=1&s=612x612&w=0&k=20&c=Myg7oRDEtj5Ct2b5Vb5nUdsGPgxmB--dqivTaf2guAY=" class="rounded-circle mb-3" alt="Team Member">
+          <h5>Hassan</h5>
+          <p>Founder & Space Educator</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="cosmic-card p-4 text-center">
+          <img src="https://media.istockphoto.com/id/1330392800/photo/portrait-young-asian-man-handsome-smile-using-smartphone-in-studio.webp?a=1&b=1&s=612x612&w=0&k=20&c=a_tC7k2bC9LP9UYASPuTTLIYIvjoD_PGsEPKPLYwWuc=" class="rounded-circle mb-3" alt="Team Member">
+          <h5>Samad Afridi</h5>
+          <p>Content Creator & Researcher</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="cosmic-card p-4 text-center">
+          <img src="https://media.istockphoto.com/id/1157099476/photo/close-up-photo-amazing-he-him-his-middle-age-macho-perfect-appearance-look-bath-mirror-shower.webp?a=1&b=1&s=612x612&w=0&k=20&c=GOd67jZGkfNE1UE6motZnzBdqLzJocEZQXChUkLqmw4=" class="rounded-circle mb-3" alt="Team Member">
+          <h5>Rehan</h5>
+          <p>Designer & Astronomy Enthusiast</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+        
+
+
+        <!-- Feedback Section -->
+<section id="feedback" class="section">
+  <div class="container">
+    <h2 class="section-title">Feedback</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="cosmic-card p-4">
+          <form id="feedback-form" onsubmit="return false;">
+            <div class="mb-3">
+              <label for="feedbackName" class="form-label">Your Name</label>
+              <input type="text" class="form-control" id="feedbackName" required>
+            </div>
+            <div class="mb-3">
+              <label for="feedbackEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="feedbackEmail" required>
+            </div>
+            <div class="mb-3">
+              <label for="feedbackMessage" class="form-label">Feedback</label>
+              <textarea class="form-control" id="feedbackMessage" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-cosmic w-100">Submit Feedback</button>
+          </form>
+
+          <!-- Success Message -->
+          <div id="feedback-success" class="alert alert-success mt-3" style="display:none;">
+            ✅ Thank you for your feedback! We appreciate your time.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+        
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <div class="cosmic-card">
+                            <div class="card-body">
+                                <form id="contact-form">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Message</label>
+                                        <textarea class="form-control" id="message" rows="5" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-cosmic w-100">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <h3 class="footer-title">Cosmic Discoveries</h3>
+                        <p>Exploring the wonders of our universe through education and discovery.</p>
+                        <div class="mt-4">
+                            <div class="visitor-counter">
+                                <i class="fas fa-users me-2"></i>
+                                <span>Visitors: <span id="footerVisitorCount">12,589</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4">
+                        <h4 class="footer-title">Explore</h4>
+                        <ul class="footer-links">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#planets">Planets</a></li>
+                            <li><a href="#stars">Stars</a></li>
+                            <li><a href="#galaxies">Galaxies</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 mb-4">
+                        <h4 class="footer-title">Learn</h4>
+                        <ul class="footer-links">
+                            <li><a href="#missions">Missions</a></li>
+                            <li><a href="#news">News</a></li>
+                            <li><a href="#telescope">Telescope</a></li>
+                            <li><a href="#resources">Resources</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <h4 class="footer-title">Connect</h4>
+                        <div class="d-flex social-icons">
+                            <a href="https://www.facebook.com/" class="btn btn-outline-light me-2"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://x.com/" class="btn btn-outline-light me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/accounts/login/?next=%2Fhass_an_butt%2F&source=omni_redirect" class="btn btn-outline-light me-2"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/" class="btn btn-outline-light me-2"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <div class="mt-4">
+                            <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Saeedabad Baldia Town</p>
+                        <a href="mailto:hb6756742@gmail.com"> hb6756742@gmail.com </a>
+                            <a href="tel:923231392451"> +92 0323 1392451 </a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4 bg-light">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <p class="mb-0">&copy; 2023 Cosmic Discoveries. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 mb-3 text-md-end">
+                        <p class="mb-0" id="date-time">Loading date and time...</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top -->
+        <div class="scroll-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script>
+            // Sample JSON data (in a real application, this would be external files)
+            const planets = [
+                { name: "Mercury", description: "The smallest planet in our solar system and closest to the Sun.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Mercury", facts: ["No moons", "Rocky planet", "Extreme temperatures"] },
+                { name: "Venus", description: "The second planet from the Sun and the hottest in our solar system.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Venus", facts: ["Thick atmosphere", "No moons", "Volcanic surface"] },
+                { name: "Earth", description: "Our home planet and the only known celestial body to harbor life.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Earth", facts: ["One moon", "Liquid water", "Oxygen-rich atmosphere"] },
+                { name: "Mars", description: "The fourth planet from the Sun, often called the 'Red Planet'.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Mars", facts: ["Two moons", "Thin atmosphere", "Potential for life"] },
+                { name: "Jupiter", description: "The largest planet in our solar system, a gas giant with a prominent Great Red Spot.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Jupiter", facts: ["79 moons", "Gas giant", "Large magnetic field"] },
+                { name: "Saturn", description: "The sixth planet from the Sun, famous for its spectacular ring system.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Saturn", facts: ["82 moons", "Prominent rings", "Low density"] },
+                { name: "Uranus", description: "The seventh planet from the Sun, an ice giant with a unique sideways rotation.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Uranus", facts: ["27 moons", "Ice giant", "Sideways rotation"] },
+                { name: "Neptune", description: "The eighth and farthest known planet from the Sun in the Solar System.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Neptune", facts: ["14 moons", "Windy planet", "Great Dark Spot"] }
+            ];
+
+            const stars = [
+                { name: "Sun", description: "The star at the center of our Solar System.", image: "file:///C:/Users/Office/Desktop/TIM/tim.html/sun.jpg", type: "G-type main-sequence" },
+                { name: "Sirius", description: "The brightest star in the night sky.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Sirius", type: "Binary star" },
+                { name: "Betelgeuse", description: "A red supergiant star in the constellation Orion.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Betelgeuse", type: "Red supergiant" },
+                { name: "Polaris", description: "The North Star, located in the constellation Ursa Minor.", image: "https://via.placeholder.com/300x200/1a1a4a/ffffff?text=Polaris", type: "Yellow supergiant" }
+            ];
+
+            // Initialize the page
+            $(document).ready(function() {
+                // Generate stars background
+                generateStars();
+                
+                // Load data into sections
+                loadPlanets();
+                loadStars();
+                
+                // Initialize date/time
+                updateDateTime();
+                setInterval(updateDateTime, 1000);
+                
+                // Initialize scroll events
+                initScrollEvents();
+                
+                // Initialize geolocation
+                initGeolocation();
+                
+                // Initialize form submission
+                $('#contact-form').on('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    this.reset();
+                });
+            });
+
+            // Generate stars background
+            function generateStars() {
+                const starsContainer = $('.stars');
+                const starsCount = 200;
+                
+                for (let i = 0; i < starsCount; i++) {
+                    const star = $('<div class="star"></div>');
+                    const size = Math.random() * 3;
+                    const brightness = Math.random() * 0.5 + 0.5;
+                    
+                    star.css({
+                        width: size + 'px',
+                        height: size + 'px',
+                        top: Math.random() * 100 + '%',
+                        left: Math.random() * 100 + '%',
+                        opacity: brightness,
+                        animation: `twinkle ${Math.random() * 5 + 3}s infinite ease-in-out`
+                    });
+                    
+                    starsContainer.append(star);
+                }
+            }
+
+            // Load planets data
+            function loadPlanets() {
+                const container = $('#planets-container');
+                
+                planetsData.forEach(planet => {
+                    const factsList = planet.facts.map(fact => `<li>${fact}</li>`).join('');
+                    
+                    const planetCard = `
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="cosmic-card h-100">
+                                <img src="${planet.image}" alt="${planet.name}">
+                                <div class="card-body">
+                                    <h3>${planet.name}</h3>
+                                    <p>${planet.description}</p>
+                                    <ul>${factsList}</ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.append(planetCard);
+                });
+            }
+
+            // Load stars data
+            function loadStars() {
+                const container = $('#stars-container');
+                
+                starsData.forEach(star => {
+                    const starCard = `
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="cosmic-card h-100">
+                                <img src="${star.image}" alt="${star.name}" alt="Voyager 1">
+                                <div class="card-body">
+                                    <h3>${star.name}</h3>
+                                    <p>${star.description}</p>
+                                    <p><strong>Type:</strong> ${star.type}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.append(starCard);
+                });
+            }
+
+            // Update date and time
+            function updateDateTime() {
+                const now = new Date();
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    timeZoneName: 'short'
+                };
+                
+                $('#date-time').text(now.toLocaleDateString('en-US', options));
+            }
+
+            // Initialize scroll events
+            function initScrollEvents() {
+                // Smooth scrolling for navigation links
+                $('a.nav-link').on('click', function(e) {
+                    e.preventDefault();
+                    const target = $(this).attr('href');
+                    $('html, body').animate({
+                        scrollTop: $(target).offset().top - 70
+                    }, 800);
+                });
+                
+                // Show/hide scroll to top button
+                $(window).on('scroll', function() {
+                    if ($(this).scrollTop() > 300) {
+                        $('.scroll-to-top').addClass('active');
+                    } else {
+                        $('.scroll-to-top').removeClass('active');
+                    }
+                });
+                
+                // Scroll to top functionality
+                $('.scroll-to-top').on('click', function() {
+                    $('html, body').animate({ scrollTop: 0 }, 800);
+                });
+            }
+
+            // Initialize geolocation
+            function initGeolocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            $('#user-location').html(`<i class="fas fa-map-marker-alt"></i> Your location: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+                        },
+                        function(error) {
+                            $('#user-location').html('<i class="fas fa-map-marker-alt"></i> Location access denied. Using default location.');
+                        }
+                    );
+                } else {
+                    $('#user-location').html('<i class="fas fa-map-marker-alt"></i> Geolocation is not supported by this browser.');
+                }
+            }
+
+        
+            const planetsData = [
+        { 
+            name: "Mercury", 
+            description: "The smallest planet in our solar system and closest to the Sun.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/18_mercury_new.png", 
+            facts: ["No moons", "Rocky planet", "Extreme temperatures"] 
+        },
+        { 
+            name: "Venus", 
+            description: "The second planet from the Sun and the hottest in our solar system.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/27_venus_jg.png", 
+            facts: ["Thick atmosphere", "No moons", "Volcanic surface"] 
+        },
+        { 
+            name: "Earth", 
+            description: "Our home planet and the only known celestial body to harbor life.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/17_earth.png", 
+            facts: ["One moon", "Liquid water", "Oxygen-rich atmosphere"] 
+        },
+        { 
+            name: "Mars", 
+            description: "The fourth planet from the Sun, often called the 'Red Planet'.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/19_mars.png", 
+            facts: ["Two moons", "Thin atmosphere", "Potential for life"] 
+        },
+        { 
+            name: "Jupiter", 
+            description: "The largest planet in our solar system with a Great Red Spot storm.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/16_jupiter_new.png", 
+            facts: ["79 moons", "Gas giant", "Strong magnetic field"] 
+        },
+        { 
+            name: "Saturn", 
+            description: "Known for its stunning ring system made of ice and rock.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/28_saturn.png", 
+            facts: ["83 moons", "Gas giant", "Least dense planet"] 
+        },
+        { 
+            name: "Uranus", 
+            description: "An ice giant that rotates on its side, unlike any other planet.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/29_uranus.png", 
+            facts: ["27 moons", "Ice giant", "Rotates sideways"] 
+        },
+        { 
+            name: "Neptune", 
+            description: "The farthest planet from the Sun, known for its deep blue color.", 
+            image: "https://solarsystem.nasa.gov/system/feature_items/images/30_neptune.png", 
+            facts: ["14 moons", "Strong winds", "Ice giant"] 
+        }
+    ];
+
+    // Stars data (real, working image URLs)
+    const starsData = [
+    {
+        name: "Sun",
+        description: "The star at the center of our Solar System.",
+        image: "https://cdn.hswstatic.com/gif/gettyimages-1406174121.jpg",
+        type: "G-type main-sequence"
+    },
+    {
+    name: "Sirius",
+    description: "The brightest star in the night sky.",
+    image: "https://images.unsplash.com/photo-1630358276501-f10b9da0892b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2lyaXVzJTIwc3RhcnxlbnwwfHwwfHx8MA%3D%3D",
+    type: "Binary star"
+    },
+    {
+        name: "Betelgeuse",
+        description: "A red supergiant star in the constellation Orion.",
+        image: "https://media.istockphoto.com/id/1198303044/photo/betelgeuse-star-against-starry-sky-artistic-vision-elements-of-this-image-furnished-by-nasa.webp?a=1&b=1&s=612x612&w=0&k=20&c=nT6LjotIXMEl1MIkbZR_u_cdj-tXCYuGfMGHhZnzbzo=",
+        type: "Red supergiant"
+    },
+    {
+        name: "Polaris",
+        description: "The North Star, located in the constellation Ursa Minor.",
+        image: "https://images.unsplash.com/photo-1628087237452-c49e4bcf80a0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9sYXJpc3xlbnwwfHwwfHx8MA%3D%3D",
+        type: "Yellow supergiant"
+    }
+    ];
+
+    function loadStars() {
+        const container = $('#stars-container');
+        
+        starsData.forEach(star => {
+            const starCard = `
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${star.image}" alt="${star.name}">
+                        <div class="card-body">
+                            <h3>${star.name}</h3>
+                            <p>${star.description}</p>
+                            <p><strong>Type:</strong> ${star.type}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            ;
+        });
+    }
+
+
+
+
+    //galaxiesData
+
+    const galaxiesData = [
+        {
+            name: "Andromeda Galaxy",
+            description: "The nearest spiral galaxy to the Milky Way.",
+            image: "https://plus.unsplash.com/premium_photo-1669839137069-4166d6ea11f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QW5kcm9tZWRhJTIwR2FsYXh5fGVufDB8fDB8fHww",
+            type: "Spiral Galaxy"
+        },
+        {
+            name: "Whirlpool Galaxy",
+            description: "A classic spiral galaxy with distinct arms.",
+            image: "https://plus.unsplash.com/premium_photo-1721766454134-9ef5675ba111?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8V2hpcmxwb29sJTIwR2FsYXh5fGVufDB8fDB8fHww",
+            type: "Spiral Galaxy"
+        },
+        {
+            name: "Orion Nebula",
+            description: "A bright diffuse nebula in the Milky Way.",
+            image: "https://cdn.mos.cms.futurecdn.net/sSCc3xnbUC8KiPGUzRy9KJ.jpg",
+            type: "Nebula"
+        }
+    ];
+
+    function loadGalaxies() {
+        const container = document.getElementById('galaxies-container');
+
+        galaxiesData.forEach(galaxy => {
+            const galaxyCard = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100">
+                        <img src="${galaxy.image}" alt="${galaxy.name}">
+                        <div class="card-body">
+                            <h3>${galaxy.name}</h3>
+                            <p>${galaxy.description}</p>
+                            <p><strong>Type:</strong> ${galaxy.type}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', galaxyCard);
+        });
+    }
+
+    // Call the function
+    loadGalaxies();
+
+    //const telescopesData
+
+    const telescopesData = [
+        {
+            name: "Hubble Space Telescope",
+            description: "Launched in 1990, providing deep views of the universe.",
+            image: "https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg",
+            type: "Optical/UV/IR"
+        },
+        {
+            name: "James Webb Space Telescope",
+            description: "Launched in 2021, focusing on infrared astronomy.",
+            image: "https://media.istockphoto.com/id/1360835072/photo/james-webb-space-telescope.webp?a=1&b=1&s=612x612&w=0&k=20&c=LwOdGtCTW8HtV9d87pQfTTbkUKQIUUW5srBw_E3GeNQ=",
+            type: "Infrared"
+        },
+        {
+            name: "Spitzer Space Telescope",
+            description: "An infrared telescope that studied stars and galaxies.",
+            image: "https://media.istockphoto.com/id/1371752135/photo/hubble-space-telescope-in-deep-space-orbital-space-observatory-stars-and-galaxies-research.webp?a=1&b=1&s=612x612&w=0&k=20&c=D0fXnTRQ44YzkdqFLq2lJP1hpEzovufMHgAwyq76yNQ=",
+            type: "Infrared"
+        }
+    ];
+
+    // Load telescopes dynamically
+    function loadTelescopes() {
+        const container = $('#telescopes-container');
+
+        telescopesData.forEach(telescope => {
+            const telescopeCard = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${telescope.image}" alt="${telescope.name}">
+                        <div class="card-body">
+                            <h3>${telescope.name}</h3>
+                            <p>${telescope.description}</p>
+                            <p><strong>Type:</strong> ${telescope.type}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(telescopeCard);
+        });
+    }
+
+    // Call the function after document is ready
+    $(document).ready(function() {
+        loadTelescopes();
+    });
+
+    //missionsData
+
+    const missionsData = [
+        {
+            name: "Apollo 11",
+            description: "The first manned mission to land on the Moon in 1969.",
+            image: "https://plus.unsplash.com/premium_photo-1725408043489-4bb5388e21b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QXBvbGxvJTIwMTF8ZW58MHx8MHx8fDA%3D",
+            year: "1969"
+        },
+        {
+            name: "Voyager 1",
+            description: "Launched in 1977, it is now in interstellar space.",
+            image: "https://www.eoportal.org/api/cms/documents/d/eoportal/voyager_autoa-jpeg",
+            year: "1977"
+        },
+        {
+            name: "Mars Rover Perseverance",
+            description: "Landed on Mars in 2021 to search for signs of past life.",
+            image: "https://media.istockphoto.com/id/1412238611/photo/mars-rover-mission-curiosity-perseverance-red-planet-and-rover-in-surface-solar-system.webp?a=1&b=1&s=612x612&w=0&k=20&c=9Jp2KU3wKP9HnZg61_eKzvnSN6bWXBWLAoTh8uZz98c=",
+            year: "2021"
+        }
+    ];
+
+    // Load missions dynamically
+    function loadMissions() {
+        const container = $('#missions-container');
+
+        missionsData.forEach(mission => {
+            const missionCard = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${mission.image}" alt="${mission.name}">
+                        <div class="card-body">
+                            <h3>${mission.name}</h3>
+                            <p>${mission.description}</p>
+                            <p><strong>Year:</strong> ${mission.year}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(missionCard);
+        });
+    }
+
+    // Call the function after document is ready
+    $(document).ready(function() {
+        loadMissions();
+    });
+
+        //const newsData = [
+
+
+        const newsData = [
+        {
+            title: "James Webb Telescope reveals new details of Neptune's rings",
+            description: "NASA's James Webb Telescope captured detailed images and spectra of Neptune's ring system, providing new insights into its composition.",
+            image: "https://cdn.mos.cms.futurecdn.net/z6UCWbAkqGvXkmQDzJnz2o.jpg",
+            date: "August 10, 2025"
+        },
+        {
+            title: "Perseid meteor shower peaks August 12-13",
+            description: "The annual Perseid meteor shower will reach its peak, offering a spectacular night sky show for stargazers worldwide.",
+            image: "https://cdn.mos.cms.futurecdn.net/Hu7sU6BpMNGEHdfEvWDWDo.jpg",
+            date: "August 12, 2025"
+        },
+        {
+            title: "NASA's Artemis I mission sets stage for lunar exploration",
+            description: "Artemis I successfully launched, marking a new era in lunar exploration and paving the way for future human missions.",
+            image: "https://images.unsplash.com/photo-1710267224542-6c0428a796fd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TkFTQSdzJTIwQXJ0ZW1pcyUyMEklMjBtaXNzaW9uJTIwc2V0cyUyMHN0YWdlJTIwZm9yJTIwbHVuYXIlMjBleHBsb3JhdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+            date: "July 26, 2025"
+        }
+    ];
+
+    // Load news dynamically
+    function loadNews() {
+        const container = $('#news-container');
+
+        newsData.forEach(news => {
+            const newsCard = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${news.image}" alt="${news.title}">
+                        <div class="card-body">
+                            <h3>${news.title}</h3>
+                            <p>${news.description}</p>
+                            <p><strong>Date:</strong> ${news.date}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(newsCard);
+        });
+    }
+
+    // Call the function after document is ready
+    $(document).ready(function() {
+        loadNews();
+    });
+
+
+    //resourcesData
+
+    const resourcesData = [
+        {
+            title: "NASA Official Website",
+            description: "Explore NASA's vast collection of space research, missions, and multimedia resources.",
+            image: "https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-illustration-16x9-1.jpg",
+            link: "https://www.nasa.gov/"
+        },
+        {
+            title: "Hubble Space Telescope",
+            description: "Discover breathtaking images and discoveries from the Hubble Space Telescope.",
+            image: "https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg",
+            link: "https://www.spacetelescope.org/"
+        },
+        {
+            title: "ESA - European Space Agency",
+            description: "Get updates on European space missions, science, and exploration programs.",
+            image: "https://files-production-saulx-eu-observer-production-en-ci-hyp-xx0.based.dev/3ac7ff5ebf5fd951ed6bce3aa9ea330d.jpg",
+            link: "https://www.esa.int/"
+        },
+        {
+            title: "Space.com",
+            description: "Your source for astronomy news, space science, and stargazing guides.",
+            image: "https://cdn.mos.cms.futurecdn.net/gu9kwKxyosV4QuLip5mtSd.jpg",
+            link: "https://www.space.com/"
+        }
+    ];
+
+    // Load resources dynamically
+    function loadResources() {
+        const container = $('#resources-container');
+
+        resourcesData.forEach(resource => {
+            const resourceCard = `
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${resource.image}" alt="${resource.title}">
+                        <div class="card-body">
+                            <h3>${resource.title}</h3>
+                            <p>${resource.description}</p>
+                            <a href="${resource.link}" target="_blank" class="btn btn-cosmic mt-2">Visit</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(resourceCard);
+        });
+    }
+
+    // Call the function after document is ready
+    $(document).ready(function() {
+        loadResources();
+    });
+
+
+
+
+
+    $(document).ready(function() {
+        generateShootingStars();
+    });
+
+
+    
+
+
+
+    // Generate static stars
+    const starsContainer = document.getElementById('stars-container');
+
+    for (let i = 0; i < 50; i++) { // 50 stars
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        const size = Math.random() * 3 + 1; // size 1-4px
+        const brightness = Math.random() * 0.8 + 0.2; // brightness 0.2-1
+
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.opacity = brightness;
+
+        starsContainer.appendChild(star);
+    }
+
+    // Example of generating a card (without floating animation)
+    const cardContainer = document.getElementById('cards-container'); // create this in HTML
+
+    const card = document.createElement('div');
+    card.classList.add('cosmic-card');
+    card.innerHTML = `
+        <h4>Star Name</h4>
+        <p>Some description about this star.</p>
+    `;
+    cardContainer.appendChild(card);
+
+
+
+        
+
+
+
+    $(document).ready(function() {
+        // Generate background stars
+        generateStars();
+
+        // Load all dynamic sections
+        loadPlanets();
+        loadStars();
+        loadGalaxies();
+        loadTelescopes();
+        loadMissions();
+        loadNews();
+        loadResources();
+
+        // Initialize date/time
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Scroll events
+        initScrollEvents();
+
+        // Form submission
+        $('#contact-form').on('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    });
+
+    // Generate background stars
+    function generateStars() {
+        const starsContainer = $('.stars');
+        const starsCount = 200;
+
+        for (let i = 0; i < starsCount; i++) {
+            const star = $('<div class="star"></div>');
+            const size = Math.random() * 3 + 1;
+            const brightness = Math.random() * 0.5 + 0.5;
+
+            star.css({
+                width: size + 'px',
+                height: size + 'px',
+                top: Math.random() * 100 + '%',
+                left: Math.random() * 100 + '%',
+                opacity: brightness,
+                animation: `float ${Math.random() * 5 + 3}s ease-in-out infinite`
+            });
+
+            starsContainer.append(star);
+        }
+    }
+
+    // Update date and time
+    function updateDateTime() {
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        };
+        $('#date-time').text(now.toLocaleDateString('en-US', options));
+    }
+
+    // Smooth scrolling & scroll-to-top
+    function initScrollEvents() {
+        $('a.nav-link').on('click', function(e) {
+            e.preventDefault();
+            const target = $(this).attr('href');
+            $('html, body').animate({
+                scrollTop: $(target).offset().top - 70
+            }, 800);
+        });
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 300) {
+                $('.scroll-to-top').addClass('active');
+            } else {
+                $('.scroll-to-top').removeClass('active');
+            }
+        });
+
+        $('.scroll-to-top').on('click', function() {
+            $('html, body').animate({ scrollTop: 0 }, 800);
+        });
+    }
+
+    // All section loaders (planets, stars, galaxies, telescopes, missions, news, resources)
+    function loadPlanets() {
+        const container = $('#planets-container');
+        planetsData.forEach(planet => {
+            const factsList = planet.facts.map(fact => `<li>${fact}</li>`).join('');
+            const card = `
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${planet.image}" alt="${planet.name}">
+                        <div class="card-body">
+                            <h3>${planet.name}</h3>
+                            <p>${planet.description}</p>
+                            <ul>${factsList}</ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    function loadStars() {
+        const container = $('#stars-container');
+        starsData.forEach(star => {
+            const card = `
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${star.image}" alt="${star.name}">
+                        <div class="card-body">
+                            <h3>${star.name}</h3>
+                            <p>${star.description}</p>
+                            <p><strong>Type:</strong> ${star.type}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    function loadGalaxies() {
+        const container = $('#galaxies-container');
+        galaxiesData.forEach(galaxy => {
+            const card = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${galaxy.image}" alt="${galaxy.name}">
+                        <div class="card-body">
+                            <h3>${galaxy.name}</h3>
+                            <p>${galaxy.description}</p>
+                            <p><strong>Type:</strong> ${galaxy.type}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    function loadTelescopes() {
+        const container = $('#telescopes-container');
+        telescopesData.forEach(telescope => {
+            const card = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${telescope.image}" alt="${telescope.name}">
+                        <div class="card-body">
+                            <h3>${telescope.name}</h3>
+                            <p>${telescope.description}</p>
+                            <p><strong>Type:</strong> ${telescope.type}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    function loadMissions() {
+        const container = $('#missions-container');
+        missionsData.forEach(mission => {
+            const card = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${mission.image}" alt="${mission.name}">
+                        <div class="card-body">
+                            <h3>${mission.name}</h3>
+                            <p>${mission.description}</p>
+                            <p><strong>Year:</strong> ${mission.year}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    function loadNews() {
+        const container = $('#news-container');
+        newsData.forEach(news => {
+            const card = `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${news.image}" alt="${news.title}">
+                        <div class="card-body">
+                            <h3>${news.title}</h3>
+                            <p>${news.description}</p>
+                            <p><strong>Date:</strong> ${news.date}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+    function loadResources() {
+        const container = $('#resources-container');
+        resourcesData.forEach(resource => {
+            const card = `
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="cosmic-card h-100 floating">
+                        <img src="${resource.image}" alt="${resource.title}">
+                        <div class="card-body">
+                            <h3>${resource.title}</h3>
+                            <p>${resource.description}</p>
+                            <a href="${resource.link}" target="_blank" class="btn btn-cosmic mt-2">Visit</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.append(card);
+        });
+    }
+
+
+
+
+
+
+        </script>
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("feedback-form");
+  const successBox = document.getElementById("feedback-success");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // stop reload
+
+    // hide form
+    form.style.display = "none";
+
+    // show success message
+    successBox.style.display = "block";
+
+    // reset form and show it again after 5 sec
+    setTimeout(() => {
+      form.reset();
+      form.style.display = "block";
+      successBox.style.display = "none";
+    }, 5000);
+  });
+});
+</script>
+        
+    </body>
+    </html> 
