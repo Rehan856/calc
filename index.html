@@ -1,736 +1,886 @@
-
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permanent Product Calculator</title>
-    <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>HealthPlus Medical Center | Advanced Healthcare Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Additional styles for images */
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(145deg, #1a2f4b 0%, #2b4f7b 100%);
-            min-height: 100vh;
-            padding: 20px;
-            animation: bgMove 16s infinite alternate;
+        
+        .doctor-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
         }
-
-        @keyframes bgMove {
-            0% { background: linear-gradient(125deg, #1a2f4b, #2b4f7b); }
-            100% { background: linear-gradient(145deg, #163a5e, #34658b); }
+        
+        .service-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(6px);
-            border-radius: 40px;
-            padding: 30px 32px;
-            box-shadow: 0 30px 50px rgba(0, 20, 40, 0.5);
-            animation: appear 0.6s cubic-bezier(0.12, 0.87, 0.23, 1.1);
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
         }
-
-        @keyframes appear {
-            0% { opacity: 0; transform: scale(0.95) translateY(30px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        h1 {
-            color: #102a41;
-            font-size: 2.6rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            letter-spacing: -0.5px;
-        }
-
-        h1 i {
-            color: #f4b942;
-            filter: drop-shadow(0 6px 8px #b6630040);
-        }
-
-        .subtitle {
-            text-align: center;
-            background: #deeaf8;
-            width: fit-content;
-            margin: 0 auto 30px auto;
-            padding: 12px 36px;
-            border-radius: 60px;
-            font-weight: 500;
-            font-size: 1.25rem;
-            color: #1b4b6c;
-            border: 2px solid white;
-            box-shadow: 0 6px 14px #0000001a;
-        }
-
-        /* product list */
-        .product-list {
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .product-item {
-            background: #ffffff;
-            border-radius: 32px;
-            padding: 24px 28px;
-            border-left: 8px solid #2f7eb6;
-            box-shadow: 0 14px 30px rgba(0, 30, 60, 0.15);
-            animation: cardRise 0.5s ease-out;
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .product-item:hover {
-            transform: translateY(-4px) scale(1.005);
-            box-shadow: 0 25px 40px -8px #1f4a7a;
-        }
-
-        @keyframes cardRise {
-            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .delete-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #d45a4a;
-            color: white;
-            border: none;
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            font-size: 1.4rem;
+        
+        .gallery-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
             cursor: pointer;
-            transition: 0.25s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.8;
-            border: 2px solid white;
-            box-shadow: 0 6px 10px rgba(180, 0, 0, 0.3);
-            z-index: 10;
+            transition: transform 0.3s ease;
         }
-
-        .delete-btn:hover {
-            background: #b13b2c;
-            transform: rotate(10deg) scale(1.1);
-            opacity: 1;
-        }
-
-        .product-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding-right: 50px;
-        }
-
-        .product-info {
-            flex: 2;
-            min-width: 260px;
-        }
-
-        .product-name {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #16344d;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .product-name i {
-            color: #2f7eb6;
-        }
-
-        .price-info {
-            display: flex;
-            gap: 28px;
-            background: #ecf3fa;
-            padding: 12px 25px;
-            border-radius: 50px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-
-        .purchase-price {
-            color: #bc4e4e;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        .market-price {
-            color: #1e8040;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        .per-item {
-            font-weight: 600;
-            background: white;
-            padding: 2px 22px;
-            border-radius: 40px;
-        }
-        .profit { color: #1e8040; }
-        .loss { color: #bc4e4e; }
-
-        .amount-control {
-            flex: 2;
-            min-width: 330px;
-            background: #ecf3fa;
-            border-radius: 60px;
-            padding: 8px 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 2px solid white;
-        }
-        .amount-label {
-            font-weight: 600;
-            color: #1d6190;
-            font-size: 1.2rem;
-        }
-        .amount-input {
-            flex: 1;
-            height: 54px;
-            border: none;
-            background: white;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-align: center;
-            border: 2px solid #b6d4fa;
-        }
-        .amount-input:focus {
-            outline: none;
-            border-color: #2f7eb6;
-        }
-        .calculate-btn {
-            background: #2f7eb6;
-            color: white;
-            border: none;
-            padding: 12px 26px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-            transition: 0.2s;
-        }
-        .calculate-btn:hover {
-            background: #1e5a86;
+        
+        .gallery-img:hover {
             transform: scale(1.05);
-        }
-
-        .product-details {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .detail-box {
-            background: #f2f8ff;
-            border-radius: 28px;
-            padding: 16px 8px;
-            text-align: center;
-            border: 1px solid white;
-            transition: 0.2s;
-        }
-        .detail-box:hover {
-            transform: translateY(-5px);
-            background: #e6f0fe;
-        }
-        .detail-label {
-            font-size: 0.9rem;
-            color: #3a5770;
-            font-weight: 600;
-        }
-        .detail-value {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #102b3f;
-        }
-        .quantity-value {
-            color: #1f70a5;
-            font-size: 2.4rem;
-        }
-        .profit-box { border-left: 8px solid #249c57; }
-        .loss-box { border-left: 8px solid #cc4f4f; }
-
-        /* summary sections */
-        .profit-loss-summary {
-            background: #e1effb;
-            border-radius: 50px;
-            padding: 28px 25px;
-            margin: 40px 0 25px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            border: 2px solid white;
-        }
-
-        .pl-item {
-            text-align: center;
-            border-right: 2px solid #b1cef0;
-        }
-        .pl-item:last-child { border-right: none; }
-        .pl-label { font-weight: 600; color: #1a4f79; font-size: 1rem; }
-        .pl-value { font-size: 2rem; font-weight: 800; }
-
-        .summary {
-            background: linear-gradient(115deg, #1a4972, #2e6190);
-            border-radius: 50px;
-            padding: 28px 25px;
-            color: white;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 20px 0 30px;
-            box-shadow: 0 22px 35px -8px #0b304e;
-        }
-        .summary-item {
-            text-align: center;
-            border-right: 2px solid #8fbbe6;
-        }
-        .summary-item:last-child { border-right: none; }
-        .summary-label { opacity: 0.9; font-size: 1rem; }
-        .summary-value { font-size: 2.2rem; font-weight: 700; }
-
-        /* ADD product section */
-        .add-product-section {
-            background: #ecf5fd;
-            border-radius: 40px;
-            padding: 30px 30px;
-            margin: 30px 0 20px;
-            border: 3px dashed #2f7eb6;
-            animation: gentlePulse 3s infinite;
-        }
-        @keyframes gentlePulse {
-            0% { border-color: #2f7eb6; }
-            50% { border-color: #f4b942; }
-            100% { border-color: #2f7eb6; }
-        }
-
-        .section-title {
-            font-size: 2rem;
-            color: #10334d;
-            margin-bottom: 22px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .input-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-            gap: 16px;
-            align-items: end;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .input-group label {
-            font-weight: 600;
-            color: #1a4e72;
-            font-size: 1rem;
-        }
-        .input-group input {
-            padding: 16px 18px;
-            border: 2px solid #c2dbf5;
-            border-radius: 40px;
-            font-size: 1rem;
-            background: white;
-            transition: 0.2s;
-        }
-        .input-group input:focus {
-            border-color: #2f7eb6;
-            transform: scale(1.02);
-            outline: none;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .add-btn {
-            background: #1e8040;
-            color: white;
-            border: none;
-            padding: 18px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: 0.25s;
-            box-shadow: 0 12px 22px #0f562a60;
-            flex: 1;
-            justify-content: center;
-        }
-        .add-btn:hover {
-            background: #146b34;
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 28px #0f562a90;
-        }
-
-        .clear-btn {
-            background: #a0b9ce;
-            color: #1d3e5c;
-            border: none;
-            padding: 18px 22px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-        .clear-btn:hover {
-            background: #8faec9;
-            transform: scale(1.02);
-        }
-
-        .reset-btn {
-            background: #c95b4a;
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 60px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-left: auto;
-            transition: 0.2s;
-        }
-        .reset-btn:hover {
-            background: #ae4132;
-            transform: rotate(1deg) scale(1.02);
-        }
-
-        .info-text {
-            background: #dbeafe;
-            border-radius: 60px;
-            padding: 16px 28px;
-            margin-top: 25px;
-            text-align: center;
-            font-weight: 500;
-            color: #103856;
-            border: 2px dotted white;
-        }
-
-        .empty-message {
-            text-align: center;
-            padding: 40px;
-            background: #f4f9ff;
-            border-radius: 40px;
-            color: #4b637a;
-            font-size: 1.3rem;
-        }
-
-        @media (max-width: 800px) {
-            .input-grid { grid-template-columns: 1fr; }
-            .product-details { grid-template-columns: 1fr 1fr; }
-            .profit-loss-summary { grid-template-columns: 1fr 1fr; }
-            .summary { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>
-        <i class="fas fa-save"></i> Permanent Products
-        <i class="fas fa-database"></i>
-    </h1>
-    <div class="subtitle">
-        <i class="fas fa-cloud-save" style="color:#137e3b;"></i> Market price ke hisaab se profit ya loss dekhein
-    </div>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-hospital-alt"></i>
+                <div>
+                    <h1>HealthPlus</h1>
+                    <p class="logo-tagline">Medical Center</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#services"><i class="fas fa-stethoscope"></i> Services</a></li>
+                <li><a href="#doctors"><i class="fas fa-user-md"></i> Doctors</a></li>
+                <li><a href="#departments"><i class="fas fa-clinic-medical"></i> Departments</a></li>
+                <li><a href="#testimonials"><i class="fas fa-comment-medical"></i> Testimonials</a></li>
+                <li><a href="#contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
+                <li><a href="#appointment" class="btn-appointment"><i class="fas fa-calendar-check"></i> Book Now</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
 
-    <div class="product-list" id="productList"></div>
-
-    <!-- PL summary -->
-    <div class="profit-loss-summary" id="plSummary"></div>
-    <!-- main summary -->
-    <div class="summary" id="mainSummary"></div>
-
-    <!-- ADD product section -->
-    <div class="add-product-section">
-        <div class="section-title">
-            <i class="fas fa-plus-circle" style="color:#1e8040;"></i>
-            Add New Product (permanent)
+    <!-- Hero Section with Image -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Advanced Healthcare with Compassion</h1>
+            <p class="hero-subtitle">State-of-the-art medical facilities with 24/7 emergency care, expert specialists, and patient-centric approach.</p>
+            <div class="hero-buttons">
+                <a href="#appointment" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Appointment</a>
+                <a href="#contact" class="btn btn-secondary"><i class="fas fa-phone-volume"></i> Emergency: (555) 911-2222</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>Expert Doctors</p>
+                </div>
+                <div class="stat">
+                    <h3>24/7</h3>
+                    <p>Emergency Care</p>
+                </div>
+                <div class="stat">
+                    <h3>10k+</h3>
+                    <p>Happy Patients</p>
+                </div>
+                <div class="stat">
+                    <h3>15+</h3>
+                    <p>Years Experience</p>
+                </div>
+            </div>
         </div>
-        <div class="input-grid">
-            <div class="input-group">
-                <label><i class="fas fa-tag"></i> Product Name</label>
-                <input type="text" id="productName" placeholder="e.g. Laptop" value="Laptop">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-coins"></i> Purchase Price ()</label>
-                <input type="number" id="purchasePrice" value="500" min="0" step="10">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-store"></i> Market Price ()</label>
-                <input type="number" id="marketPrice" value="650" min="0" step="10">
-            </div>
-            <div class="button-group">
-                <button class="add-btn" onclick="addProduct()">
-                    <i class="fas fa-plus-circle"></i> ADD PRODUCT
-                </button>
-                <button class="clear-btn" onclick="clearInputs()">
-                    <i class="fas fa-eraser"></i> clear
-                </button>
+        <div class="hero-image">
+            <!-- Main Hero Image -->
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                 alt="Modern Hospital Facility - HealthPlus Medical Center" 
+                 class="hero-img">
+            
+            <!-- Small Image Gallery -->
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                     alt="Doctor Consultation" 
+                     class="gallery-img">
+                <img src="https://images.unsplash.com/photo-1586773860418-dc22f8b874bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                     alt="Emergency Room" 
+                     class="gallery-img">
             </div>
         </div>
-        <small style="display: block; text-align: center; margin-top: 20px; color: #305d86;">
+    </section>
 
-        </small>
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+        <div class="container">
+            <i class="fas fa-ambulance"></i>
+            <div class="emergency-content">
+                <h3>Medical Emergency?</h3>
+                <p>Call our 24/7 emergency hotline</p>
+            </div>
+            <a href="tel:+15559112222" class="emergency-btn">
+                <i class="fas fa-phone"></i> (555) 911-2222
+            </a>
+        </div>
     </div>
 
-    <div style="display: flex; justify-content: flex-end;">
-        <button class="reset-btn" onclick="resetAllAmounts()">
-            <i class="fas fa-undo-alt"></i> reset amounts only
-        </button>
-    </div>
+    <!-- Services Section with Images -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Specialized Services</h2>
+            <p class="section-subtitle">Comprehensive medical care across all major specialties</p>
+            
+            <div class="services-grid">
+                <!-- Service 1 with Image -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Cardiac Care Services" 
+                             class="service-img">
+                    </div>
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Cardiac Care</h3>
+                    <p>Advanced cardiac diagnostics, angioplasty, bypass surgery, and rehabilitation programs.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> ECG & Stress Test</li>
+                        <li><i class="fas fa-check-circle"></i> Echocardiography</li>
+                        <li><i class="fas fa-check-circle"></i> Cardiac Cath Lab</li>
+                    </ul>
+                </div>
 
-    <div class="info-text" id="infoMessage">
-        <i class="fas fa-shield-alt" style="color:#1d7ab3;"></i>
-        <strong>✅ Permanent Save:</strong>  Tip:  Add button = new product |  Delete button = remove product | Enter amount and see instant results
-    </div>
-</div>
+                <!-- Service 2 with Image -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Neurosciences" 
+                             class="service-img">
+                    </div>
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Neurosciences</h3>
+                    <p>Comprehensive neurological care including stroke management, epilepsy, and movement disorders.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> EEG & EMG</li>
+                        <li><i class="fas fa-check-circle"></i> Neuro Rehabilitation</li>
+                        <li><i class="fas fa-check-circle"></i> Deep Brain Stimulation</li>
+                    </ul>
+                </div>
 
-<script>
-    (function() {
-        // ---------- localStorage se data load karo ----------
-        function loadProducts() {
-            const saved = localStorage.getItem('permanentProducts');
-            if (saved) {
-                try {
-                    return JSON.parse(saved);
-                } catch (e) {
-                    console.error('Error loading products', e);
-                }
+                <!-- Service 3 with Image -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Orthopedics" 
+                             class="service-img">
+                    </div>
+                    <div class="service-icon">
+                        <i class="fas fa-bone"></i>
+                    </div>
+                    <h3>Orthopedics & Joint Care</h3>
+                    <p>Advanced joint replacements, sports medicine, trauma care, and spine surgery.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Arthroscopic Surgery</li>
+                        <li><i class="fas fa-check-circle"></i> Joint Replacement</li>
+                        <li><i class="fas fa-check-circle"></i> Physiotherapy</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 with Image -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Pediatrics" 
+                             class="service-img">
+                    </div>
+                    <div class="service-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3>Pediatrics & Neonatology</h3>
+                    <p>Specialized care for children including NICU, PICU, vaccination, and growth monitoring.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Level III NICU</li>
+                        <li><i class="fas fa-check-circle"></i> Pediatric ICU</li>
+                        <li><i class="fas fa-check-circle"></i> Vaccination Clinic</li>
+                    </ul>
+                </div>
+
+                <!-- Service 5 with Image -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Pulmonology" 
+                             class="service-img">
+                    </div>
+                    <div class="service-icon">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                    <h3>Pulmonology</h3>
+                    <p>Comprehensive respiratory care including sleep studies, bronchoscopy, and asthma management.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Pulmonary Function Test</li>
+                        <li><i class="fas fa-check-circle"></i> Sleep Lab</li>
+                        <li><i class="fas fa-check-circle"></i> Bronchoscopy</li>
+                    </ul>
+                </div>
+
+                <!-- Service 6 with Image -->
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Oncology" 
+                             class="service-img">
+                    </div>
+                    <div class="service-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3>Oncology Center</h3>
+                    <p>Advanced cancer care with chemotherapy, radiation therapy, and surgical oncology.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Chemotherapy</li>
+                        <li><i class="fas fa-check-circle"></i> Radiation Therapy</li>
+                        <li><i class="fas fa-check-circle"></i> Cancer Surgery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section with Images -->
+    <section class="doctors" id="doctors">
+        <div class="container">
+            <h2 class="section-title">Meet Our Expert Doctors</h2>
+            <p class="section-subtitle">Board-certified specialists with extensive experience</p>
+            
+            <div class="doctors-grid">
+                <!-- Doctor 1 with Image -->
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Dr. Sarah Johnson - Cardiologist" 
+                             class="doctor-img">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Sarah Johnson</h3>
+                        <p class="specialty">Cardiologist</p>
+                        <p class="qualification">MD, DM Cardiology</p>
+                        <p class="experience">18+ years experience</p>
+                        <div class="doctor-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7 (320 reviews)</span>
+                        </div>
+                        <div class="doctor-actions">
+                            <a href="#appointment" class="btn-book">Book Appointment</a>
+                            <a href="#" class="btn-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor 2 with Image -->
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Dr. Michael Chen - Neurosurgeon" 
+                             class="doctor-img">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Michael Chen</h3>
+                        <p class="specialty">Neurosurgeon</p>
+                        <p class="qualification">MCh Neurosurgery</p>
+                        <p class="experience">15+ years experience</p>
+                        <div class="doctor-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0 (280 reviews)</span>
+                        </div>
+                        <div class="doctor-actions">
+                            <a href="#appointment" class="btn-book">Book Appointment</a>
+                            <a href="#" class="btn-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor 3 with Image -->
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://images.unsplash.com/photo-1594824434340-7e7dfc37cabb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Dr. Priya Sharma - Pediatrician" 
+                             class="doctor-img">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Priya Sharma</h3>
+                        <p class="specialty">Pediatrician</p>
+                        <p class="qualification">MD Pediatrics</p>
+                        <p class="experience">12+ years experience</p>
+                        <div class="doctor-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.8 (450 reviews)</span>
+                        </div>
+                        <div class="doctor-actions">
+                            <a href="#appointment" class="btn-book">Book Appointment</a>
+                            <a href="#" class="btn-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor 4 with Image -->
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                             alt="Dr. Robert Wilson - Orthopedic Surgeon" 
+                             class="doctor-img">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Robert Wilson</h3>
+                        <p class="specialty">Orthopedic Surgeon</p>
+                        <p class="qualification">MS Orthopedics</p>
+                        <p class="experience">20+ years experience</p>
+                        <div class="doctor-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0 (380 reviews)</span>
+                        </div>
+                        <div class="doctor-actions">
+                            <a href="#appointment" class="btn-book">Book Appointment</a>
+                            <a href="#" class="btn-profile">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#" class="btn btn-outline">View All Doctors <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section class="departments" id="departments">
+        <div class="container">
+            <h2 class="section-title">Medical Departments</h2>
+            <div class="departments-grid">
+                <div class="department-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Cardiology</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Neurology</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-lungs"></i>
+                    <h3>Pulmonology</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-bone"></i>
+                    <h3>Orthopedics</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Ophthalmology</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-tooth"></i>
+                    <h3>Dentistry</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-allergies"></i>
+                    <h3>Dermatology</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-kidneys"></i>
+                    <h3>Nephrology</h3>
+                </div>
+                <div class="department-card">
+                    <i class="fas fa-stomach"></i>
+                    <h3>Gastroenterology</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Section - Connected to Gmail -->
+    <section class="appointment" id="appointment">
+        <div class="container">
+            <div class="appointment-wrapper">
+                <div class="appointment-form-section">
+                    <h2>Book Your Appointment</h2>
+                    <form id="appointmentForm" class="appointment-form" action="https://formsubmit.co/ra2006pk@gmail.com" method="POST">
+                        <!-- Hidden fields for FormSubmit -->
+                        <input type="hidden" name="_subject" value="New Appointment Request - HealthPlus Medical Center">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                        <input type="hidden" name="_autoresponse" value="Thank you for booking an appointment with HealthPlus Medical Center. We will contact you within 2 hours to confirm your appointment. For emergencies, call (555) 911-2222.">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName"><i class="fas fa-user"></i> Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone"><i class="fas fa-phone"></i> Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-envelope"></i> Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age"><i class="fas fa-birthday-cake"></i> Age *</label>
+                                <input type="number" id="age" name="age" min="0" max="120" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department"><i class="fas fa-clinic-medical"></i> Select Department *</label>
+                            <select id="department" name="department" required>
+                                <option value="">Choose Department</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="neurology">Neurology</option>
+                                <option value="orthopedics">Orthopedics</option>
+                                <option value="pediatrics">Pediatrics</option>
+                                <option value="dermatology">Dermatology</option>
+                                <option value="dentistry">Dentistry</option>
+                                <option value="ophthalmology">Ophthalmology</option>
+                                <option value="general">General Medicine</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointmentDate"><i class="fas fa-calendar-alt"></i> Preferred Date *</label>
+                                <input type="date" id="appointmentDate" name="appointmentDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointmentTime"><i class="fas fa-clock"></i> Preferred Time *</label>
+                                <select id="appointmentTime" name="appointmentTime" required>
+                                    <option value="">Select Time Slot</option>
+                                    <option value="09:00-10:00">09:00 AM - 10:00 AM</option>
+                                    <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
+                                    <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
+                                    <option value="14:00-15:00">02:00 PM - 03:00 PM</option>
+                                    <option value="15:00-16:00">03:00 PM - 04:00 PM</option>
+                                    <option value="16:00-17:00">04:00 PM - 05:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doctor"><i class="fas fa-user-md"></i> Preferred Doctor (Optional)</label>
+                            <select id="doctor" name="doctor">
+                                <option value="">Any Available Doctor</option>
+                                <option value="dr_sarah">Dr. Sarah Johnson (Cardiologist)</option>
+                                <option value="dr_michael">Dr. Michael Chen (Neurosurgeon)</option>
+                                <option value="dr_priya">Dr. Priya Sharma (Pediatrician)</option>
+                                <option value="dr_robert">Dr. Robert Wilson (Orthopedic Surgeon)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="symptoms"><i class="fas fa-file-medical-alt"></i> Symptoms / Reason for Visit *</label>
+                            <textarea id="symptoms" name="symptoms" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="emergency" name="emergency" value="Yes">
+                            <label for="emergency">This is an emergency situation</label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="insurance" name="insurance" value="Yes">
+                            <label for="insurance">I have medical insurance</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Submit Appointment Request
+                        </button>
+                        
+                        <p class="form-note">We will contact you within 2 hours to confirm your appointment.</p>
+                    </form>
+                </div>
+
+                <div class="appointment-info-section">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Appointment Information</h3>
+                        <ul class="info-list">
+                            <li><i class="fas fa-check-circle"></i> Same-day appointments available</li>
+                            <li><i class="fas fa-check-circle"></i> Online consultation option</li>
+                            <li><i class="fas fa-check-circle"></i> Insurance accepted</li>
+                            <li><i class="fas fa-check-circle"></i> Senior citizen discount</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="fas fa-clock"></i> Working Hours</h3>
+                        <div class="timing-item">
+                            <span>Monday - Friday</span>
+                            <span>8:00 AM - 8:00 PM</span>
+                        </div>
+                        <div class="timing-item">
+                            <span>Saturday</span>
+                            <span>9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="timing-item">
+                            <span>Sunday</span>
+                            <span>10:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="timing-item emergency">
+                            <span>Emergency</span>
+                            <span>24/7 Available</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="fas fa-phone-alt"></i> Contact for Appointments</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <p class="contact-label">Appointment Desk</p>
+                                <p class="contact-value">(555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <p class="contact-label">Email</p>
+                                <p class="contact-value">ra2006pk@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-whatsapp"></i>
+                            <div>
+                                <p class="contact-label">WhatsApp</p>
+                                <p class="contact-value">+92 3182152988</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section - Connected to Gmail -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Our Location</h3>
+                        <p>123 Medical Center Drive</p>
+                        <p>Health City, HC 12345</p>
+                        <p>United States</p>
+                        <a href="#" class="map-link"><i class="fas fa-directions"></i> Get Directions</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-phone"></i>
+                        <h3>Phone Numbers</h3>
+                        <div class="phone-numbers">
+                            <div>
+                                <p class="phone-label">General Inquiry</p>
+                                <p class="phone-number">(555) 123-4567</p>
+                            </div>
+                            <div>
+                                <p class="phone-label">Emergency</p>
+                                <p class="phone-number emergency">(555) 911-2222</p>
+                            </div>
+                            <div>
+                                <p class="phone-label">Ambulance</p>
+                                <p class="phone-number">(555) 911-3333</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email Addresses</h3>
+                        <p class="email-item">
+                            <span>General:</span>
+                            <a href="mailto:ra2006pk@gmail.com">ra2006pk@gmail.com</a>
+                        </p>
+                        <p class="email-item">
+                            <span>Appointments:</span>
+                            <a href="mailto:ra2006pk@gmail.com">ra2006pk@gmail.com</a>
+                        </p>
+                        <p class="email-item">
+                            <span>Emergency:</span>
+                            <a href="mailto:ra2006pk@gmail.com">ra2006pk@gmail.com</a>
+                        </p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Visit Us</h3>
+                        <p>Open 24/7 for emergencies</p>
+                        <p>Parking available on-site</p>
+                        <p>Wheelchair accessible</p>
+                        <p>Free Wi-Fi for patients</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form-section">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm" class="contact-form" action="https://formsubmit.co/ra2006pk@gmail.com" method="POST">
+                        <!-- Hidden fields for FormSubmit -->
+                        <input type="hidden" name="_subject" value="New Message from HealthPlus Website">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Your Name *" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Your Email *" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="subject" placeholder="Subject *" required>
+                        </div>
+                        <div class="form-group">
+                            <select name="department" required>
+                                <option value="">Select Department *</option>
+                                <option>Cardiology</option>
+                                <option>Neurology</option>
+                                <option>Pediatrics</option>
+                                <option>Orthopedics</option>
+                                <option>General Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message *" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="footer-logo">
+                            <i class="fas fa-hospital-alt"></i>
+                            <div>
+                                <h3>HealthPlus Medical Center</h3>
+                                <p>Advanced Healthcare Since 2008</p>
+                            </div>
+                        </div>
+                        <p class="footer-about">We are committed to providing exceptional healthcare services with compassion, advanced technology, and experienced medical professionals.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                            <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                            <li><a href="#doctors"><i class="fas fa-chevron-right"></i> Doctors</a></li>
+                            <li><a href="#departments"><i class="fas fa-chevron-right"></i> Departments</a></li>
+                            <li><a href="#appointment"><i class="fas fa-chevron-right"></i> Book Appointment</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Cardiology</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Neurology</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Orthopedics</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Pediatrics</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Emergency Care</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Newsletter</h4>
+                        <p>Subscribe for health tips and updates</p>
+                        <form class="newsletter-form" action="https://formsubmit.co/ra2006pk@gmail.com" method="POST">
+                            <input type="hidden" name="_subject" value="New Newsletter Subscription - HealthPlus">
+                            <input type="email" name="email" placeholder="Enter your email" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                        <div class="footer-contact">
+                            <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                            <p><i class="fas fa-envelope"></i> ra2006pk@gmail.com</p>
+                            <p><i class="fas fa-map-marker-alt"></i> 123 Medical Center Drive</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 HealthPlus Medical Center. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                <p class="accreditation">
+                    <i class="fas fa-award"></i> Accredited by: Joint Commission International | ISO 9001:2015 Certified
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <script>
+        // JavaScript for Form Handling and Interactive Features
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Set minimum date for appointment (today)
+            const dateInput = document.getElementById('appointmentDate');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
             }
-            // default products
-            return [
-                { id: 1, name: 'Purse', purchasePrice: 450, marketPrice: 600, amount: 0 },
-            ];
-        }
-
-        // ---------- localStorage me save karo ----------
-        function saveProducts() {
-            localStorage.setItem('permanentProducts', JSON.stringify(products));
-        }
-
-        // ---------- global variables ----------
-        let products = loadProducts();
-        let nextId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-
-        // helper: update quantity based on amount
-        function refreshQuantities() {
-            products.forEach(p => {
-                p.quantity = (p.purchasePrice > 0) ? Math.floor(p.amount / p.purchasePrice) : 0;
-            });
-        }
-
-        // ---------- RENDER ----------
-        function renderFull() {
-            refreshQuantities();
-            const container = document.getElementById('productList');
-            container.innerHTML = '';
-
-            if (products.length === 0) {
-                container.innerHTML = '<div class="empty-message"><i class="fas fa-box-open fa-3x"></i><br>no products yet · click ADD PRODUCT</div>';
-            } else {
-                products.forEach(prod => {
-                    const q = prod.quantity;
-                    const invested = q * prod.purchasePrice;
-                    const marketTotal = q * prod.marketPrice;
-                    const pl = marketTotal - invested;
-                    const perItem = prod.marketPrice - prod.purchasePrice;
-
-                    const card = document.createElement('div');
-                    card.className = 'product-item';
-                    card.id = `prod-${prod.id}`;
-                    card.innerHTML = `
-                        <button class="delete-btn" onclick="deleteProduct(${prod.id})" title="delete permanently"><i class="fas fa-trash"></i></button>
-                        <div class="product-header">
-                            <div class="product-info">
-                                <div class="product-name"><i class="fas fa-cube"></i> ${prod.name}</div>
-                                <div class="price-info">
-                                    <span class="purchase-price"><i class="fas fa-tag"></i> ${prod.purchasePrice}</span>
-                                    <span class="market-price"><i class="fas fa-chart-line"></i> ${prod.marketPrice}</span>
-                                    <span class="per-item ${perItem >= 0 ? 'profit' : 'loss'}">per item: ${perItem >= 0 ? '+' : ''}${perItem}</span>
-                                </div>
-                            </div>
-                            <div class="amount-control">
-                                <span class="amount-label"><i class="fas fa-rupee-sign"></i> amount</span>
-                                <input type="number" class="amount-input" id="inp-${prod.id}" value="${prod.amount}" min="0" step="50" onchange="updateAmount(${prod.id}, this.value)">
-                                <button class="calculate-btn" onclick="triggerCalc(${prod.id})"><i class="fas fa-sync-alt"></i> calc</button>
-                            </div>
-                        </div>
-                        <div class="product-details">
-                            <div class="detail-box"><div class="detail-label">invested</div><div class="detail-value">${invested}</div></div>
-                            <div class="detail-box"><div class="detail-label">quantity</div><div class="detail-value quantity-value">${q} pcs</div></div>
-                            <div class="detail-box"><div class="detail-label">market value</div><div class="detail-value">${marketTotal}</div></div>
-                            <div class="detail-box ${pl >= 0 ? 'profit-box' : 'loss-box'}">
-                                <div class="detail-label">P&L</div><div class="detail-value ${pl >= 0 ? 'profit' : 'loss'}">${pl >= 0 ? '+' : ''}${pl}</div>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
+            
+            // Form validation for Appointment Form
+            const appointmentForm = document.getElementById('appointmentForm');
+            if (appointmentForm) {
+                appointmentForm.addEventListener('submit', function(e) {
+                    const phone = document.getElementById('phone').value;
+                    const email = document.getElementById('email').value;
+                    
+                    // Basic phone validation
+                    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+                    if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+                        e.preventDefault();
+                        alert('Please enter a valid phone number (at least 10 digits).');
+                        return false;
+                    }
+                    
+                    // Email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        e.preventDefault();
+                        alert('Please enter a valid email address.');
+                        return false;
+                    }
+                    
+                    // Show loading state
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
                 });
             }
-            updateSummaries();
-            saveProducts(); // har render ke baad save karo
-        }
-
-        // update summaries (totals)
-        function updateSummaries() {
-            refreshQuantities();
-            let totalInvest = 0, totalMarket = 0, totalQty = 0, totalProfitVal = 0, totalLossVal = 0;
-            products.forEach(p => {
-                const q = p.quantity;
-                const inv = q * p.purchasePrice;
-                const mkt = q * p.marketPrice;
-                totalInvest += inv;
-                totalMarket += mkt;
-                totalQty += q;
-                const pl = mkt - inv;
-                if (pl > 0) totalProfitVal += pl;
-                else totalLossVal += Math.abs(pl);
+            
+            // Form validation for Contact Form
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    // Show loading state
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                    submitBtn.disabled = true;
+                });
+            }
+            
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (window.innerWidth <= 768 && navLinks) {
+                            navLinks.style.display = 'none';
+                        }
+                    }
+                });
             });
-            const netPl = totalMarket - totalInvest;
-            const plPercent = totalInvest > 0 ? ((netPl / totalInvest) * 100).toFixed(1) : 0;
-
-            document.getElementById('mainSummary').innerHTML = `
-                <div class="summary-item"><div class="summary-label">total invest</div><div class="summary-value">${totalInvest}</div></div>
-                <div class="summary-item"><div class="summary-label">market value</div><div class="summary-value">${totalMarket}</div></div>
-                <div class="summary-item"><div class="summary-label">net P&L</div><div class="summary-value ${netPl >= 0 ? 'profit' : 'loss'}">${netPl >= 0 ? '+' : ''}${netPl}</div></div>
-                <div class="summary-item"><div class="summary-label">total qty</div><div class="summary-value">${totalQty} pcs</div></div>
-            `;
-
-            document.getElementById('plSummary').innerHTML = `
-                <div class="pl-item"><div class="pl-label">total profit</div><div class="pl-value profit">+${totalProfitVal}</div></div>
-                <div class="pl-item"><div class="pl-label">total loss</div><div class="pl-value loss">-${totalLossVal}</div></div>
-                <div class="pl-item"><div class="pl-label">net P&L</div><div class="pl-value ${netPl >= 0 ? 'profit' : 'loss'}">${netPl >= 0 ? '+' : ''}${Math.abs(netPl)}</div></div>
-                <div class="pl-item"><div class="pl-label">P&L %</div><div class="pl-value ${netPl >= 0 ? 'profit' : 'loss'}">${netPl >= 0 ? '+' : ''}${plPercent}%</div></div>
-            `;
-        }
-
-        // ----- manual update functions -----
-        window.updateAmount = function(pid, val) {
-            const prod = products.find(p => p.id === pid);
-            if (!prod) return;
-            prod.amount = parseFloat(val) || 0;
-            renderFull();
-        };
-
-        window.triggerCalc = function(pid) {
-            const inp = document.getElementById(`inp-${pid}`);
-            if (inp) window.updateAmount(pid, inp.value);
-        };
-
-        // ---------- DELETE only when user clicks ----------
-        window.deleteProduct = function(pid) {
-            if (confirm('Permanently delete this product? This cannot be undone.')) {
-                products = products.filter(p => p.id !== pid);
-                renderFull();
-                showTemporaryMessage('🗑️ product deleted · it will not come back');
-            }
-        };
-
-        // ---------- ADD product ----------
-        window.addProduct = function() {
-            const nameIn = document.getElementById('productName');
-            const purchIn = document.getElementById('purchasePrice');
-            const marketIn = document.getElementById('marketPrice');
-
-            const name = nameIn.value.trim() || 'item';
-            const purch = parseFloat(purchIn.value) || 0;
-            const market = parseFloat(marketIn.value) || 0;
-            if (purch < 0 || market < 0) {
-                alert('prices cannot be negative');
-                return;
-            }
-
-            const newProd = {
-                id: nextId++,
-                name: name,
-                purchasePrice: purch,
-                marketPrice: market,
-                amount: 0
-            };
-            products.push(newProd);
-            renderFull();
-            showTemporaryMessage(`✅ "${name}" added · permanently saved!`);
-        };
-
-        window.clearInputs = function() {
-            document.getElementById('productName').value = '';
-            document.getElementById('purchasePrice').value = '500';
-            document.getElementById('marketPrice').value = '650';
-            showTemporaryMessage('✏️ inputs cleared');
-        };
-
-        // reset only amounts, never remove products
-        window.resetAllAmounts = function() {
-            if (products.length === 0) {
-                showTemporaryMessage('no products to reset');
-                return;
-            }
-            products.forEach(p => p.amount = 0);
-            renderFull();
-            showTemporaryMessage('🔄 all amounts reset to zero · products saved');
-        };
-
-        // helper message
-        function showTemporaryMessage(msg) {
-            const infoDiv = document.getElementById('infoMessage');
-            const original = infoDiv.innerHTML;
-            infoDiv.innerHTML = `<i class="fas fa-check-circle" style="color:#2a7f3a;"></i> <strong>${msg}</strong>`;
-            setTimeout(() => {
-                infoDiv.innerHTML = original;
-            }, 2200);
-        }
-
-        // initial render
-        renderFull();
-
-        // optional: window close se pehle bhi save ho jayega, but render already saves
-        window.addEventListener('beforeunload', function() {
-            saveProducts();
+            
+            // Back to top button visibility
+            const backToTop = document.querySelector('.back-to-top');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.style.opacity = '1';
+                    backToTop.style.visibility = 'visible';
+                } else {
+                    backToTop.style.opacity = '0';
+                    backToTop.style.visibility = 'hidden';
+                }
+            });
+            
+            // Gallery image click event
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function() {
+                    const mainImg = document.querySelector('.hero-img');
+                    const tempSrc = mainImg.src;
+                    mainImg.src = this.src;
+                    this.src = tempSrc;
+                });
+            });
         });
-    })();
-</script>
-<!-- font awesome -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    </script>
 </body>
-
 </html>
